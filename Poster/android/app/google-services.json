@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "212481463396",
+    "firebase_url": "https://poster-60048.firebaseio.com",
+    "project_id": "poster-60048",
+    "storage_bucket": "poster-60048.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:212481463396:android:fbabae46181a59d171fb71",
+        "android_client_info": {
+          "package_name": "kanan.yusubov.poster"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "212481463396-19or00aku2pbjs4ajn7mm6imir5arpf2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "kanan.yusubov.poster",
+            "certificate_hash": "8364b97a86b3f42f262c758cf81f04eceb73bb69"
+          }
+        },
+        {
+          "client_id": "212481463396-0nv15ceusdrdoerku0lsacq0ukn58tg4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbU0L_qwLTMtztKZawGT010mlCmPqzVx4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "212481463396-0nv15ceusdrdoerku0lsacq0ukn58tg4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

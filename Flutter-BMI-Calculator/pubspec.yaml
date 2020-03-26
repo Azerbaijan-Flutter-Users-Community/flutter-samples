@@ -1,0 +1,45 @@
+name: bmi_calculator
+description: Simple BMI calculator for adults.
+version: 2.0.0+4
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+     sdk: flutter
+  google_fonts: ^0.3.7
+  shared_preferences: ^0.5.6+2
+  firebase_admob:
+  rxdart: ^0.23.1
+  get_it: ^4.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_launcher_icons: ^0.7.4
+
+
+flutter_icons:
+  android: 'launcher_icon'
+  ios: false
+  image_path: "assets/bmi.png" 
+  adaptive_icon_background: "#ffffff"
+  
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/bmi.png
+    - assets/male.svg
+    - assets/female.svg
+    - assets/male_selected.svg
+    - assets/female_selected.svg
+    - lang/az.json
+    - lang/en.json
+
+
+
