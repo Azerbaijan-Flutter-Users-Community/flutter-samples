@@ -2,6 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class AppColors {
+  static const lightPrimaryColor = Colors.white;
+  static const darkPrimaryColor = Colors.black54;
+
+  static const lightSecondaryColor = Colors.white70;
+  static const darkSecondaryColor = Colors.black45;
+
+  static const bottomNavigationBarBackgroundColor = Colors.deepPurple;
+
   static const primaryColor = Color.fromRGBO(41, 98, 255, 1);
   static const accentColor = Color.fromRGBO(184, 203, 255, 1);
   static const backgroundColor = Colors.white;

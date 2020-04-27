@@ -8,7 +8,7 @@ class AppFonts {
   /// * fontSize: 80
   /// * color: primaryColor
   static final largeFontStyle = GoogleFonts.roboto(
-    color: AppColors.primaryColor,
+    color: Colors.deepPurple,
     fontSize: SizeConfig.textMultiplier * 22.222,
     fontWeight: FontWeight.w700,
     height: 0.9,
@@ -17,7 +17,7 @@ class AppFonts {
   /// * fontSize: 31
   /// * color: secondaryColor
   static final mediumFontStyle = GoogleFonts.roboto(
-    color: AppColors.secondaryColor,
+    color: Colors.deepPurple,
     fontSize: SizeConfig.textMultiplier * 8.611,
     fontWeight: FontWeight.w500,
   );

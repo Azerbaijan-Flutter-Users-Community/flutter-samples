@@ -16,14 +16,6 @@ class _CalculationPageState extends State<CalculationPage> {
   @override
   void initState() {
     languageBloc = GetIt.instance.get<LanguageBloc>();
-
-    languageBloc.currentLocale.listen((locale) {
-      print('curent: ${locale.languageCode}');
-    });
-
-    languageBloc.languageEnabled.listen((isEnabled) {
-      print('isEnabled: $isEnabled');
-    });
     super.initState();
   }
 
@@ -42,19 +34,12 @@ class _CalculationPageState extends State<CalculationPage> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          isEnabled = !isEnabled;
-          languageBloc.changeLanguage(isEnabled);
-        },
-        child: Icon(Icons.view_stream),
-      ),
     );
   }
 
   @override
   void dispose() {
-    languageBloc.dispose();
+    languageBloc?.dispose();
     super.dispose();
   }
 }

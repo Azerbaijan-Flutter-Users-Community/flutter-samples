@@ -14,11 +14,12 @@ void main() async {
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(
       statusBarBrightness: Brightness.dark,
-      statusBarIconBrightness: Brightness.dark,
+      statusBarIconBrightness: Brightness.light,
+      statusBarColor: Colors.deepPurple,
+
       // status bar icons' color
-      systemNavigationBarIconBrightness: Brightness.dark,
-      statusBarColor: Colors.white,
-      systemNavigationBarColor: Colors.white,
+      systemNavigationBarIconBrightness: Brightness.light,
+      systemNavigationBarColor: Colors.deepPurple,
       systemNavigationBarDividerColor: Colors.white,
       // bar icons' color
     ),
@@ -57,6 +58,33 @@ class _MyAppState extends State<MyApp> {
         stream: languageBloc.currentLocale,
         builder: (context, currentLocaleSnapshot) {
           return MaterialApp(
+            themeMode: ThemeMode.light,
+            darkTheme: ThemeData(
+              brightness: Brightness.dark,
+              primaryColor: Colors.deepPurple,
+              primaryColorDark: Colors.deepPurple,
+              accentColor: Colors.black54,
+              highlightColor: Colors.white,
+              textTheme: TextTheme(
+                title: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                ),
+              ),
+            ),
+            theme: ThemeData(
+              brightness: Brightness.light,
+              primaryColor: Colors.deepPurple,
+              primaryColorDark: Colors.deepPurple,
+              accentColor: Colors.deepPurpleAccent,
+              highlightColor: Colors.white,
+              textTheme: TextTheme(
+                title: TextStyle(
+                  color: Colors.purple,
+                  fontSize: 16,
+                ),
+              ),
+            ),
             title: 'Flutter BMI Calculator',
             locale: currentLocaleSnapshot.data,
             supportedLocales: [

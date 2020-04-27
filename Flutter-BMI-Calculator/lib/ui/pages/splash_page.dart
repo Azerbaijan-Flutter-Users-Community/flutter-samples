@@ -1,10 +1,11 @@
 import 'dart:async';
 
 import 'package:bmi_calculator/constants/routes.dart';
-import 'package:bmi_calculator/ui/shared/colors.dart';
 import 'package:bmi_calculator/ui/shared/fonts.dart';
 import 'package:bmi_calculator/ui/size_config.dart';
 import 'package:flutter/material.dart';
+
+import '../../constants/routes.dart';
 
 class SplashPage extends StatefulWidget {
   @override
@@ -30,7 +31,6 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
