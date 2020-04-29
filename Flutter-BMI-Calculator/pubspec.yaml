@@ -15,6 +15,7 @@ dependencies:
   firebase_admob:
   rxdart: ^0.23.1
   get_it: ^4.0.0
+  flutter_svg:
 
 dev_dependencies:
   flutter_test:
@@ -33,13 +34,8 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/bmi.png
-    - assets/male.svg
-    - assets/female.svg
-    - assets/male_selected.svg
-    - assets/female_selected.svg
-    - lang/az.json
-    - lang/en.json
+    - assets/
+    - lang/
 
 
 

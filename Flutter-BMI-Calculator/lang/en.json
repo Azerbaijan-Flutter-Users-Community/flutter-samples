@@ -1,4 +1,7 @@
 {
-  "welcome": "Welcome\n",
-  "calculation_page": "Calculator Page: in development"
+  "bmi_calculator": "BMI Calculator",
+  "welcome": "Welcome",
+  "gender": "Gender",
+  "language_selection": "Language",
+  "dark_mode": "Dark mode"
 }

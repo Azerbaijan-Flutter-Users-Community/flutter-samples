@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:bmi_calculator/constants/routes.dart';
-import 'package:bmi_calculator/ui/shared/fonts.dart';
 import 'package:bmi_calculator/ui/size_config.dart';
 import 'package:flutter/material.dart';
 
@@ -24,8 +23,8 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   void initState() {
-    super.initState();
     _startTime();
+    super.initState();
   }
 
   @override
@@ -49,7 +48,7 @@ class _SplashPageState extends State<SplashPage> {
                     offset: offset,
                     child: Text(
                       'BMI',
-                      style: AppFonts.largeFontStyle,
+                      style: Theme.of(context).textTheme.title,
                     ),
                   );
                 }),
@@ -67,7 +66,7 @@ class _SplashPageState extends State<SplashPage> {
                     offset: offset,
                     child: Text(
                       'calculator',
-                      style: AppFonts.mediumFontStyle,
+                      style: Theme.of(context).textTheme.headline,
                     ),
                   );
                 }),

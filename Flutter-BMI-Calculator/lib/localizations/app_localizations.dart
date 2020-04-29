@@ -19,7 +19,7 @@ class AppLocalizations {
   static const LocalizationsDelegate<AppLocalizations> delegate =
       _AppLocalizationsDelegate();
 
-  Map<String, List<int>> _localizedStrings;
+  Map<String, String> _localizedStrings;
 
   Future<bool> load() async {
     String jsonString =
@@ -27,14 +27,14 @@ class AppLocalizations {
     Map<String, dynamic> jsonMap = json.decode(jsonString);
 
     _localizedStrings = jsonMap.map((key, value) {
-      return MapEntry(key, utf8.encode(value.toString()));
+      return MapEntry(key, value.toString());
     });
 
     return true;
   }
 
   String translate(String key) {
-    return utf8.decode(_localizedStrings[key]);
+    return _localizedStrings[key];
   }
 }
 

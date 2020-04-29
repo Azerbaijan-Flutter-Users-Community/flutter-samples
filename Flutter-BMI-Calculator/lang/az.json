@@ -1,4 +1,7 @@
 {
-  "welcome": "Xoş Gəlmisiniz!\n",
-  "calculation_page": "Kalkluyator səhifəsi: üzərində işlənilir"
+  "bmi_calculator": "BMI Hesablayıcı",
+  "welcome": "Xoş Gəlmisiniz!",
+  "gender": "Cinsiniz",
+  "language_selection": "Dil seçimi",
+  "dark_mode": "Tünd mövzu"
 }
