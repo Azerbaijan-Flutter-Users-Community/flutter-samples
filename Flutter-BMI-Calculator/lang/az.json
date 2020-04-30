@@ -1,7 +1,16 @@
 {
   "bmi_calculator": "BMI Hesablayıcı",
   "welcome": "Xoş Gəlmisiniz!",
-  "gender": "Cinsiniz",
   "language_selection": "Dil seçimi",
-  "dark_mode": "Tünd mövzu"
+  "dark_mode": "Tünd tema",
+  "about": "Haqqında",
+  "male": "QADIN",
+  "female": "KİŞİ",
+  "height": "BOYUNUZ",
+  "cm": "sm",
+  "weight": "KÜTLƏNİZ",
+  "kg": "kq",
+  "gr": "qr",
+  "settings": "Tənzimləmələr",
+  "calculate": "HESABLA"
 }

@@ -27,6 +27,12 @@ class ThemeBloc extends BaseBloc {
     }
 
     final isDarkModeEnabled = prefs.getBool('theme');
+
+    if (isDarkModeEnabled == null) {
+      _themeChangeSubject.add(false);
+      return;
+    }
+
     if (isDarkModeEnabled)
       _themeChangeSubject.add(true);
     else

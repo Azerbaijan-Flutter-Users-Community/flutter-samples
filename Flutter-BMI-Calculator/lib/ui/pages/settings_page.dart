@@ -1,5 +1,5 @@
 import 'package:bmi_calculator/blocs/lang_bloc/language_bloc.dart';
-import 'package:bmi_calculator/blocs/lang_bloc/theme_bloc.dart';
+import 'package:bmi_calculator/blocs/theme_bloc/theme_bloc.dart';
 import 'package:bmi_calculator/constants/localization_keys.dart';
 import 'package:bmi_calculator/localizations/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +25,8 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Settings'),
+        title: Text(
+            AppLocalizations.of(context).translate(LocalizationKeys.settings)),
       ),
       body: ListView(
         children: <Widget>[
@@ -33,8 +34,8 @@ class _SettingsPageState extends State<SettingsPage> {
             stream: _languageBloc.languageEnabled,
             builder: (context, langSnapshot) {
               return SwitchListTile(
+                activeColor: Colors.pinkAccent,
                 value: langSnapshot.hasData ? langSnapshot.data : false,
-                activeColor: Theme.of(context).primaryColor,
                 title: Text(AppLocalizations.of(context)
                     .translate(LocalizationKeys.languageSelection)),
                 onChanged: (value) {
@@ -50,8 +51,8 @@ class _SettingsPageState extends State<SettingsPage> {
             stream: _themeBloc.darkModeEnabled,
             builder: (context, themeSnapshot) {
               return SwitchListTile(
+                activeColor: Colors.pinkAccent,
                 value: themeSnapshot.hasData ? themeSnapshot.data : false,
-                activeColor: Theme.of(context).primaryColorDark,
                 title: Text(AppLocalizations.of(context)
                     .translate(LocalizationKeys.darkMode)),
                 onChanged: (value) {
@@ -64,7 +65,8 @@ class _SettingsPageState extends State<SettingsPage> {
             height: 0,
           ),
           ListTile(
-            title: Text('About'),
+            title: Text(
+                AppLocalizations.of(context).translate(LocalizationKeys.about)),
             onTap: () {},
           ),
           Divider(

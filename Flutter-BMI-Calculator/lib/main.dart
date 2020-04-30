@@ -1,5 +1,5 @@
 import 'package:bmi_calculator/blocs/lang_bloc/language_bloc.dart';
-import 'package:bmi_calculator/blocs/lang_bloc/theme_bloc.dart';
+import 'package:bmi_calculator/blocs/theme_bloc/theme_bloc.dart';
 import 'package:bmi_calculator/localizations/app_localizations.dart';
 import 'package:bmi_calculator/locator.dart';
 import 'package:bmi_calculator/ui/pages/splash_page.dart';
@@ -18,11 +18,11 @@ void main() async {
     SystemUiOverlayStyle(
       statusBarBrightness: Brightness.dark,
       statusBarIconBrightness: Brightness.light,
-      statusBarColor: Colors.deepPurple,
+      statusBarColor: AppColors.primaryAndDarkColor,
 
       // status bar icons' color
       systemNavigationBarIconBrightness: Brightness.light,
-      systemNavigationBarColor: Colors.deepPurple,
+      systemNavigationBarColor: AppColors.primaryAndDarkColor,
       systemNavigationBarDividerColor: Colors.white,
       // bar icons' color
     ),
@@ -53,8 +53,8 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     languageBloc = GetIt.instance.get<LanguageBloc>();
     themeBloc = GetIt.instance.get<ThemeBloc>();
-    languageBloc.loadDefaultLocale();
-    themeBloc.loadDefaultTheme();
+    languageBloc?.loadDefaultLocale();
+    themeBloc?.loadDefaultTheme();
     super.initState();
   }
 
@@ -70,18 +70,17 @@ class _MyAppState extends State<MyApp> {
               return StreamBuilder<Locale>(
                   stream: languageBloc.currentLocale,
                   builder: (context, currentLocaleSnapshot) {
-                    print('locale rebuilding..');
                     return StreamBuilder<ThemeMode>(
                       stream: themeBloc.currentThemeMode,
                       builder: (context, themeSnapshot) {
-                        print('theme rebuilding..');
                         return MaterialApp(
                           themeMode: themeSnapshot.data,
                           darkTheme: ThemeData(
                             brightness: Brightness.dark,
-                            primaryColor: Colors.deepPurple,
-                            primaryColorDark: Colors.deepPurple,
-                            accentColor: Colors.black54,
+                            primaryColor: AppColors.primaryAndDarkColor,
+                            accentColor: Colors.pinkAccent,
+                            scaffoldBackgroundColor:
+                                AppColors.primaryAndDarkColor,
                             textTheme: TextTheme(
                               title: GoogleFonts.roboto(
                                 fontSize: SizeConfig.widthMultiplier *
@@ -101,43 +100,90 @@ class _MyAppState extends State<MyApp> {
                                 fontSize: SizeConfig.widthMultiplier *
                                     4.444 *
                                     SizeConfig.textScaleFactor,
+                                color: Colors.grey,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              body2: GoogleFonts.roboto(
+                                fontSize: SizeConfig.widthMultiplier *
+                                    4.444 *
+                                    SizeConfig.textScaleFactor,
                                 color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              subtitle: GoogleFonts.roboto(
+                                fontSize: SizeConfig.widthMultiplier *
+                                    4.444 *
+                                    SizeConfig.textScaleFactor,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                             unselectedWidgetColor:
-                                AppColors.unselectedGenderBackground,
+                                AppColors.unselectedDarkGenderBackground,
                             focusColor: AppColors.selectedGenderBackground,
+                            hintColor: Colors.white,
+                            dividerColor: Colors.grey,
+                            sliderTheme: SliderThemeData(
+                              activeTrackColor: Colors.pinkAccent,
+                              activeTickMarkColor: Colors.pink,
+                              disabledThumbColor: Colors.pink,
+                              thumbColor: Colors.pink,
+                              inactiveTrackColor: Colors.white,
+                              overlayColor: Colors.pinkAccent.withOpacity(0.3),
+                            ),
                           ),
                           theme: ThemeData(
                             brightness: Brightness.light,
-                            primaryColor: Colors.deepPurple,
-                            primaryColorDark: Colors.deepPurple,
-                            accentColor: Colors.deepPurpleAccent,
+                            primaryColor: AppColors.primaryAndDarkColor,
+                            scaffoldBackgroundColor: Colors.grey[300],
+                            accentColor: Colors.pinkAccent,
                             textTheme: TextTheme(
                               title: GoogleFonts.roboto(
                                 fontSize: SizeConfig.widthMultiplier *
                                     22.22 *
                                     SizeConfig.textScaleFactor,
-                                color: Colors.deepPurple,
+                                color: AppColors.primaryAndDarkColor,
                                 fontWeight: FontWeight.bold,
                               ),
                               headline: GoogleFonts.roboto(
                                 fontSize: SizeConfig.widthMultiplier *
                                     8.611 *
                                     SizeConfig.textScaleFactor,
-                                color: Colors.deepPurple,
+                                color: AppColors.primaryAndDarkColor,
                                 fontWeight: FontWeight.bold,
                               ),
                               body1: GoogleFonts.roboto(
                                 fontSize: SizeConfig.widthMultiplier *
                                     4.444 *
                                     SizeConfig.textScaleFactor,
+                                color: Colors.grey,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              body2: GoogleFonts.roboto(
+                                fontSize: SizeConfig.widthMultiplier *
+                                    4.444 *
+                                    SizeConfig.textScaleFactor,
                                 color: Colors.deepPurple,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              subtitle: GoogleFonts.roboto(
+                                fontSize: SizeConfig.widthMultiplier *
+                                    4.444 *
+                                    SizeConfig.textScaleFactor,
+                                color: AppColors.primaryAndDarkColor,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                             unselectedWidgetColor:
                                 AppColors.unselectedGenderBackground,
                             focusColor: AppColors.selectedGenderBackground,
+                            hintColor: AppColors.primaryAndDarkColor,
+                            sliderTheme: SliderThemeData(
+                              activeTrackColor: Colors.pinkAccent,
+                              activeTickMarkColor: Colors.pink,
+                              disabledThumbColor: Colors.pink,
+                              thumbColor: Colors.pink,
+                            ),
                           ),
                           title: 'Flutter BMI Calculator',
                           locale: currentLocaleSnapshot.data,

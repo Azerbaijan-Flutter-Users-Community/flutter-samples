@@ -65,7 +65,7 @@ class _SplashPageState extends State<SplashPage> {
                   return Transform.translate(
                     offset: offset,
                     child: Text(
-                      'calculator',
+                      'Calculator',
                       style: Theme.of(context).textTheme.headline,
                     ),
                   );

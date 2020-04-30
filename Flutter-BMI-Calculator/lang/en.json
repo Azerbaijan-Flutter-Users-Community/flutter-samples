@@ -1,7 +1,16 @@
 {
   "bmi_calculator": "BMI Calculator",
   "welcome": "Welcome",
-  "gender": "Gender",
   "language_selection": "Language",
-  "dark_mode": "Dark mode"
+  "dark_mode": "Dark mode",
+  "about": "About",
+  "male": "MALE",
+  "female": "FEMALE",
+  "height": "HEIGHT",
+  "cm": "cm",
+  "weight": "WEIGHT",
+  "kg": "kg",
+  "gr": "gr",
+  "settings": "Settings",
+  "calculate": "CALCULATE"
 }
