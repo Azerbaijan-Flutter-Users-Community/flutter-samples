@@ -183,6 +183,8 @@ class _MyAppState extends State<MyApp> {
                               activeTickMarkColor: Colors.pink,
                               disabledThumbColor: Colors.pink,
                               thumbColor: Colors.pink,
+                              inactiveTrackColor: Colors.grey,
+                              overlayColor: Colors.pinkAccent.withOpacity(0.3),
                             ),
                           ),
                           title: 'Flutter BMI Calculator',
