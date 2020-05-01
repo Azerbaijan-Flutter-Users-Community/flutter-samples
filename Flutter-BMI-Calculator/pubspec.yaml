@@ -10,12 +10,12 @@ dependencies:
     sdk: flutter
   flutter_localizations:
      sdk: flutter
-  google_fonts: ^0.3.7
-  shared_preferences: ^0.5.6+2
-  firebase_admob:
-  rxdart: ^0.23.1
-  get_it: ^4.0.0
-  flutter_svg:
+  google_fonts: ^1.0.0
+  shared_preferences: ^0.5.7
+  rxdart: ^0.24.0
+  get_it: ^4.0.2
+  flutter_svg: ^0.17.4
+  toast: ^0.1.5
 
 dev_dependencies:
   flutter_test:

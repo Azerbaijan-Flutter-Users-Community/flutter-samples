@@ -16,4 +16,6 @@ class LocalizationKeys {
   static const String gr = "gr";
   static const String settings = "settings";
   static const String calculate = "calculate";
+  static const String age = "age";
+  static const String years_old = "years_old";
 }

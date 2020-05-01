@@ -6,10 +6,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 class ThemeBloc extends BaseBloc {
   BehaviorSubject<ThemeMode> _themeSubject = new BehaviorSubject<ThemeMode>();
   BehaviorSubject<bool> _themeChangeSubject = new BehaviorSubject<bool>();
+  bool _isFirstTime = true;
 
   ThemeBloc() {
     _themeChangeSubject.stream.listen((bool isEnabled) {
-      print('good listener');
       _themeSubject.add(isEnabled ? ThemeMode.dark : ThemeMode.light);
     });
   }

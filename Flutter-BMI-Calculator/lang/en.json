@@ -12,5 +12,7 @@
   "kg": "kg",
   "gr": "gr",
   "settings": "Settings",
-  "calculate": "CALCULATE"
+  "calculate": "CALCULATE",
+  "age": "Age",
+  "years_old": "Years old"
 }
