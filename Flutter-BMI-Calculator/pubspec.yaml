@@ -1,6 +1,6 @@
 name: bmi_calculator
 description: Simple BMI calculator for adults.
-version: 2.0.0+4
+version: 2.0.1+5
 
 environment:
   sdk: ">=2.1.0 <3.0.0"

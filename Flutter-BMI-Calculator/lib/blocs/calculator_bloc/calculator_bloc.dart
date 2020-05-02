@@ -21,7 +21,7 @@ class BMIResult {
 }
 
 mixin BMIValidator {
-  bool isHeightValid(double value) => value != null || value > 0;
+  bool isHeightValid(double value) => value != null && value > 0;
 
   bool isWeightValid(double value) =>
       value != null &&
@@ -36,20 +36,29 @@ class CalculatorBloc extends Bloc<CalculatorEvent, CalculatorState>
   CalculatorBloc() {
     weight.listen((weight) {
       print('weight: working');
-      if (!isWeightValid(weight)) add(InvalidErrorHappened(Invalid.WEIGHT));
+      print('weight: $_weight');
+      print('height: $_height');
+      print('age: $_age');
       _calculateButtonEnabledSubject.add(isAllValid());
+      if (!isWeightValid(weight)) add(InvalidErrorHappened(Invalid.WEIGHT));
     });
 
     height.listen((height) {
       print('height: working');
-      if (!isHeightValid(height)) add(InvalidErrorHappened(Invalid.HEIGHT));
+      print('weight: $_weight');
+      print('height: $_height');
+      print('age: $_age');
       _calculateButtonEnabledSubject.add(isAllValid());
+      if (!isHeightValid(height)) add(InvalidErrorHappened(Invalid.HEIGHT));
     });
 
     age.listen((age) {
       print('age: working');
-      if (!isAgeValid(age)) add(InvalidErrorHappened(Invalid.AGE));
+      print('weight: $_weight');
+      print('height: $_height');
+      print('age: $_age');
       _calculateButtonEnabledSubject.add(isAllValid());
+      if (!isAgeValid(age)) add(InvalidErrorHappened(Invalid.AGE));
     });
   }
 
