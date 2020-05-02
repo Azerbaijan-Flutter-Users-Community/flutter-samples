@@ -1,14 +1,17 @@
 import 'dart:async';
 
 import 'package:bmi_calculator/blocs/calculator_bloc/calculator_bloc.dart';
+import 'package:bmi_calculator/blocs/theme_bloc/theme_bloc.dart';
 import 'package:bmi_calculator/constants/localization_keys.dart';
 import 'package:bmi_calculator/constants/routes.dart';
 import 'package:bmi_calculator/localizations/app_localizations.dart';
+import 'package:bmi_calculator/ui/shared/colors.dart';
 import 'package:bmi_calculator/ui/size_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get_it/get_it.dart';
 import 'package:toast/toast.dart';
 
 class CalculationPage extends StatefulWidget {
@@ -22,6 +25,7 @@ class _CalculationPageState extends State<CalculationPage> {
   TextEditingController _ageController = new TextEditingController();
   StreamSubscription _errorTypeSubscription;
   var _key = GlobalKey<ScaffoldState>();
+  ThemeBloc _themeBloc;
 
   @override
   void initState() {
