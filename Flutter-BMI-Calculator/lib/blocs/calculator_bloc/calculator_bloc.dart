@@ -21,39 +21,35 @@ class BMIResult {
 }
 
 mixin BMIValidator {
-  bool isHeightValid(double value) => !(value == null || value <= 0);
+  bool isHeightValid(double value) => value != null || value > 0;
 
   bool isWeightValid(double value) =>
       value != null &&
       !value.toString().contains('..') &&
       (value > 1 && value <= 300);
 
-  bool isAgeValid(int value) => !(value == null || value < 20);
+  bool isAgeValid(int value) => value != null && value > 20;
 }
 
 class CalculatorBloc extends Bloc<CalculatorEvent, CalculatorState>
     with BMIValidator {
   CalculatorBloc() {
     weight.listen((weight) {
-      age.listen((age) {
-        height.listen((height) {
-          bool isAllValid =
-              isHeightValid(height) && isWeightValid(weight) && isAgeValid(age);
-          _calculateButtonEnabledSubject.add(isAllValid);
-        });
-      });
-    });
-
-    weight.listen((weight) {
+      print('weight: working');
       if (!isWeightValid(weight)) add(InvalidErrorHappened(Invalid.WEIGHT));
+      _calculateButtonEnabledSubject.add(isAllValid());
     });
 
     height.listen((height) {
+      print('height: working');
       if (!isHeightValid(height)) add(InvalidErrorHappened(Invalid.HEIGHT));
+      _calculateButtonEnabledSubject.add(isAllValid());
     });
 
     age.listen((age) {
+      print('age: working');
       if (!isAgeValid(age)) add(InvalidErrorHappened(Invalid.AGE));
+      _calculateButtonEnabledSubject.add(isAllValid());
     });
   }
 
@@ -80,6 +76,7 @@ class CalculatorBloc extends Bloc<CalculatorEvent, CalculatorState>
 
   double _height = 0.0;
   double _weight = 0.0;
+  int _age = 0;
 
   void onGenderSelected(Gender type) {
     if (type == Gender.FEMALE) {
@@ -103,7 +100,7 @@ class CalculatorBloc extends Bloc<CalculatorEvent, CalculatorState>
 
   void onAgeChanged(String value) {
     int parsed = int.tryParse(value);
-
+    _age = parsed;
     _ageSubject.add(parsed);
   }
 
@@ -132,6 +129,9 @@ class CalculatorBloc extends Bloc<CalculatorEvent, CalculatorState>
       yield InvalidError(event.invalid);
     }
   }
+
+  bool isAllValid() =>
+      isWeightValid(_weight) && isAgeValid(_age) && isHeightValid(_height);
 
   @override
   Future<void> close() {

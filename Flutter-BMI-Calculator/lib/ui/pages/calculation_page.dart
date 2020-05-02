@@ -29,7 +29,7 @@ class _CalculationPageState extends State<CalculationPage> {
   void initState() {
     super.initState();
 
-    _calculatorBloc = new CalculatorBloc();
+    _calculatorBloc = BlocProvider.of<CalculatorBloc>(context);
     // send weight to bloc
     _weightController.addListener(() {
       _calculatorBloc.onWeightChanged(_weightController.text);

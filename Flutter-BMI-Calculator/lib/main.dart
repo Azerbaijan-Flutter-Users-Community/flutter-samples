@@ -176,7 +176,7 @@ class _MyAppState extends State<MyApp> {
                   GlobalMaterialLocalizations.delegate,
                   GlobalWidgetsLocalizations.delegate,
                 ],
-                debugShowCheckedModeBanner: !kReleaseMode,
+                debugShowCheckedModeBanner: kReleaseMode,
                 home: SplashPage(),
                 onGenerateRoute: onGenerateRoute,
               );
