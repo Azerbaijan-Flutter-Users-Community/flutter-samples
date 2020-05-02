@@ -18,4 +18,14 @@ class LocalizationKeys {
   static const String calculate = "calculate";
   static const String age = "age";
   static const String years_old = "years_old";
+  static const String invalid_weight = "invalid_weight";
+  static const String invalid_height = "invalid_height";
+  static const String invalid_age = "invalid_age";
+  static const String result = "result";
+  static const String underweight = "underweight";
+  static const String normal = "normal";
+  static const String overweight = "overweight";
+  static const String obese = "obese";
+  static const String your_bmi_value = "your_bmi_value";
+  static const String cancel = "cancel";
 }

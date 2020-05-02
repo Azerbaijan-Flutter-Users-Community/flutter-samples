@@ -1,17 +1,16 @@
 import 'dart:async';
 
 import 'package:bmi_calculator/blocs/calculator_bloc/calculator_bloc.dart';
-import 'package:bmi_calculator/blocs/theme_bloc/theme_bloc.dart';
+import 'package:bmi_calculator/blocs/calculator_bloc/calculator_event.dart';
+import 'package:bmi_calculator/blocs/calculator_bloc/calculator_state.dart';
 import 'package:bmi_calculator/constants/localization_keys.dart';
 import 'package:bmi_calculator/constants/routes.dart';
 import 'package:bmi_calculator/localizations/app_localizations.dart';
-import 'package:bmi_calculator/ui/shared/colors.dart';
 import 'package:bmi_calculator/ui/size_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get_it/get_it.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:toast/toast.dart';
 
 class CalculationPage extends StatefulWidget {
@@ -24,116 +23,178 @@ class _CalculationPageState extends State<CalculationPage> {
   TextEditingController _weightController = new TextEditingController();
   TextEditingController _ageController = new TextEditingController();
   StreamSubscription _errorTypeSubscription;
-  var _key = GlobalKey<ScaffoldState>();
-  ThemeBloc _themeBloc;
+  StreamSubscription _resultSubscription;
 
   @override
   void initState() {
     super.initState();
 
+    _calculatorBloc = new CalculatorBloc();
+    // send weight to bloc
     _weightController.addListener(() {
       _calculatorBloc.onWeightChanged(_weightController.text);
     });
 
+    // send age to bloc
     _ageController.addListener(() {
       _calculatorBloc.onAgeChanged(_ageController.text);
-    });
-
-    _calculatorBloc = new CalculatorBloc();
-
-    String message;
-    _errorTypeSubscription = _calculatorBloc.errorType.listen((errorType) {
-      if (errorType == null) {
-        return;
-      }
-
-      if (errorType == Invalid.HEIGHT) {
-        message = 'Height shouldn\'t be zero!';
-      } else if (errorType == Invalid.WEIGHT) {
-        message = 'Weight should be between 1 and 300!';
-      } else if (errorType == Invalid.AGE) {
-        message = 'Age should be greater than 20!';
-      }
-
-      Toast.show(
-        message,
-        context,
-        backgroundColor: Theme.of(context).cardColor,
-        duration: Toast.LENGTH_SHORT,
-        gravity: Toast.CENTER,
-      );
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _key,
-      appBar: AppBar(
-        title: Text(
-          AppLocalizations.of(context)
-              .translate(LocalizationKeys.bmiCalculator),
-        ),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.settings),
-            onPressed: () {
-              FocusScope.of(context).unfocus();
-              Navigator.of(context).pushNamed(settings);
-            },
+    return BlocListener(
+      bloc: _calculatorBloc,
+      listener: (context, calculatorState) {
+        if (calculatorState is InvalidError) {
+          String message;
+
+          Invalid errorType = calculatorState.invalidType;
+
+          if (errorType == Invalid.HEIGHT) {
+            message = AppLocalizations.of(context)
+                .translate(LocalizationKeys.invalid_height);
+          } else if (errorType == Invalid.WEIGHT) {
+            message = AppLocalizations.of(context)
+                .translate(LocalizationKeys.invalid_weight);
+          } else if (errorType == Invalid.AGE) {
+            message = AppLocalizations.of(context)
+                .translate(LocalizationKeys.invalid_age);
+          }
+
+          Toast.show(
+            message,
+            context,
+            backgroundColor: Theme.of(context).cardColor,
+            duration: Toast.LENGTH_SHORT,
+            gravity: Toast.CENTER,
+          );
+        } else if (calculatorState is BMISuccess) {
+          FocusScope.of(context).unfocus();
+
+          final resultType = calculatorState.bmiResult.bmi;
+          String value = calculatorState.bmiResult.result;
+          String resultMessage;
+
+          if (resultType == BMI.UNDERWEIGHT) {
+            resultMessage = AppLocalizations.of(context)
+                .translate(LocalizationKeys.underweight);
+          } else if (resultType == BMI.NORMAL) {
+            resultMessage =
+                AppLocalizations.of(context).translate(LocalizationKeys.normal);
+          } else if (resultType == BMI.OVERWEIGHT) {
+            resultMessage = AppLocalizations.of(context)
+                .translate(LocalizationKeys.overweight);
+          } else if (resultType == BMI.OBESE) {
+            resultMessage =
+                AppLocalizations.of(context).translate(LocalizationKeys.obese);
+          }
+
+          showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                    titleTextStyle: Theme.of(context).textTheme.subtitle,
+                    title: Text(
+                      AppLocalizations.of(context)
+                          .translate(LocalizationKeys.result),
+                    ),
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Text(
+                            '${AppLocalizations.of(context).translate(LocalizationKeys.your_bmi_value)}: $value'),
+                        Text(resultMessage),
+                      ],
+                    ),
+                    actions: <Widget>[
+                      FlatButton(
+                        child: Text(AppLocalizations.of(context)
+                            .translate(LocalizationKeys.cancel)),
+                        onPressed: () => Navigator.of(context).pop(),
+                      ),
+                    ],
+                  ));
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            AppLocalizations.of(context)
+                .translate(LocalizationKeys.bmiCalculator),
           ),
-        ],
-      ),
-      body: SafeArea(
-        bottom: false,
-        child: Stack(
-          children: <Widget>[
-            Scrollbar(
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    StreamBuilder<bool>(
-                      stream: _calculatorBloc.isMaleSelected,
-                      builder: (context, genderSnapshot) {
-                        return _buildGenderRow(genderSnapshot.data ?? false);
-                      },
-                    ),
-                    _buildWeightAndAgeRow(),
-                    StreamBuilder<double>(
-                      stream: _calculatorBloc.height,
-                      builder: (context, heightSnapshot) {
-                        return _buildHeightWidget(heightSnapshot.data ?? 0);
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                    minWidth: double.infinity,
-                    minHeight: SizeConfig.heightMultiplier *
-                        7 *
-                        SizeConfig.textScaleFactor),
-                child: FlatButton(
-                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  color: Theme.of(context).accentColor,
-                  child: Text(
-                    AppLocalizations.of(context)
-                        .translate(LocalizationKeys.calculate),
-                    style: Theme.of(context)
-                        .textTheme
-                        .body1
-                        .copyWith(color: Colors.white),
-                  ),
-                  onPressed: () => _calculatorBloc.onCalculatePressed(),
-                ),
-              ),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.settings),
+              onPressed: () {
+                FocusScope.of(context).unfocus();
+                Navigator.of(context).pushNamed(settings);
+              },
             ),
           ],
+        ),
+        body: SafeArea(
+          bottom: false,
+          child: Stack(
+            children: <Widget>[
+              Scrollbar(
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      StreamBuilder<bool>(
+                        stream: _calculatorBloc.isMaleSelected,
+                        builder: (context, genderSnapshot) {
+                          return _buildGenderRow(genderSnapshot.data ?? false);
+                        },
+                      ),
+                      _buildWeightAndAgeRow(),
+                      StreamBuilder<double>(
+                        stream: _calculatorBloc.height,
+                        builder: (context, heightSnapshot) {
+                          return _buildHeightWidget(heightSnapshot.data ?? 0);
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                      minWidth: double.infinity,
+                      minHeight: SizeConfig.heightMultiplier *
+                          7 *
+                          SizeConfig.textScaleFactor),
+                  child: StreamBuilder<bool>(
+                    stream: _calculatorBloc.isCalculateButtonEnabled,
+                    builder: (context, isEnabledSnapshot) {
+                      return FlatButton(
+                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        color: Theme.of(context).accentColor,
+                        disabledColor:
+                            Theme.of(context).highlightColor.withOpacity(1.0),
+                        child: Text(
+                          AppLocalizations.of(context)
+                              .translate(LocalizationKeys.calculate),
+                          style: Theme.of(context)
+                              .textTheme
+                              .body1
+                              .copyWith(color: Colors.white),
+                        ),
+                        onPressed: isEnabledSnapshot.hasData
+                            ? (isEnabledSnapshot.data
+                                ? () => _calculatorBloc
+                                    .add(CalculateButtonPressed())
+                                : null)
+                            : null,
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -157,10 +218,10 @@ class _CalculationPageState extends State<CalculationPage> {
     String iconPath;
 
     if (isMan)
-      iconPath = isSelected ? 'assets/male_selected.svg' : 'assets/male.svg';
+      iconPath = isSelected ? 'assets/male_selected.png' : 'assets/male.png';
     else
       iconPath =
-          isSelected ? 'assets/female_selected.svg' : 'assets/female.svg';
+          isSelected ? 'assets/female_selected.png' : 'assets/female.png';
 
     return Expanded(
       child: GestureDetector(
@@ -177,7 +238,10 @@ class _CalculationPageState extends State<CalculationPage> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              SvgPicture.asset(iconPath),
+              Image.asset(
+                iconPath,
+                height: SizeConfig.heightMultiplier * 16,
+              ),
               Text(
                 AppLocalizations.of(context).translate(
                     isMan ? LocalizationKeys.male : LocalizationKeys.female),
@@ -337,6 +401,7 @@ class _CalculationPageState extends State<CalculationPage> {
     _ageController?.dispose();
     _weightController?.dispose();
     _errorTypeSubscription?.cancel();
+    _resultSubscription?.cancel();
     super.dispose();
   }
 }

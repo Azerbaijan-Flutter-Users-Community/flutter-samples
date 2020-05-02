@@ -40,7 +40,6 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   LanguageBloc _languageBloc;
   ThemeBloc _themeBloc;
-  ThemeMode _currentMode;
 
   @override
   void initState() {
@@ -58,15 +57,18 @@ class _MyAppState extends State<MyApp> {
           return StreamBuilder<ThemeMode>(
             stream: _themeBloc.currentThemeMode,
             builder: (context, themeSnapshot) {
-              print('theme logic is rebuilding...');
               return MaterialApp(
                 themeMode: themeSnapshot.data,
                 darkTheme: ThemeData(
+                  pageTransitionsTheme: PageTransitionsTheme(builders: {
+                    TargetPlatform.android: ZoomPageTransitionsBuilder(),
+                  }),
                   brightness: Brightness.dark,
                   accentColor: Colors.pinkAccent,
                   primaryColor: Colors.black45,
                   primaryColorDark: Colors.black45,
                   primaryColorLight: Colors.black45,
+                  disabledColor: Colors.grey,
                   appBarTheme: AppBarTheme(brightness: Brightness.dark),
                   textTheme: TextTheme(
                     title: GoogleFonts.roboto(
@@ -112,6 +114,9 @@ class _MyAppState extends State<MyApp> {
                   cardColor: Colors.red,
                 ),
                 theme: ThemeData(
+                  pageTransitionsTheme: PageTransitionsTheme(builders: {
+                    TargetPlatform.android: ZoomPageTransitionsBuilder(),
+                  }),
                   brightness: Brightness.light,
                   primaryColor: AppColors.primaryAndDarkColor,
                   primaryColorDark: AppColors.primaryAndDarkColor,

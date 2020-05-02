@@ -1,32 +1,71 @@
-import 'package:bmi_calculator/blocs/base_bloc.dart';
-import 'package:rxdart/rxdart.dart';
+import 'dart:async';
+
+import 'package:bmi_calculator/blocs/calculator_bloc/calculator_event.dart';
+import 'package:bmi_calculator/blocs/calculator_bloc/calculator_state.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 enum Gender { MALE, FEMALE }
 
 enum Invalid { HEIGHT, WEIGHT, AGE }
 
-mixin BMIValidator {
-  bool isHeightValid(double value) => value > 0 ? true : false;
+enum BMI { UNDERWEIGHT, NORMAL, OVERWEIGHT, OBESE }
 
-  bool isWeightValid(double value) => value > 0 && value < 300 ? true : false;
+class BMIResult {
+  final BMI bmi;
+  final String result;
 
-  bool isAgeValid(int value) => value >= 20 ? true : false;
+  BMIResult({
+    this.bmi,
+    this.result,
+  });
 }
 
-class CalculatorBloc extends BaseBloc with BMIValidator {
+mixin BMIValidator {
+  bool isHeightValid(double value) => !(value == null || value <= 0);
+
+  bool isWeightValid(double value) =>
+      value != null &&
+      !value.toString().contains('..') &&
+      (value > 1 && value <= 300);
+
+  bool isAgeValid(int value) => !(value == null || value < 20);
+}
+
+class CalculatorBloc extends Bloc<CalculatorEvent, CalculatorState>
+    with BMIValidator {
   CalculatorBloc() {
-    _isMaleSelectedSubject.add(false);
-    _heightSubject.add(_height);
-    _weightSubject.add(_weight);
-    _ageSubject.add(_age);
-    _errorSubject.add(null);
+    weight.listen((weight) {
+      age.listen((age) {
+        height.listen((height) {
+          bool isAllValid =
+              isHeightValid(height) && isWeightValid(weight) && isAgeValid(age);
+          _calculateButtonEnabledSubject.add(isAllValid);
+        });
+      });
+    });
+
+    weight.listen((weight) {
+      if (!isWeightValid(weight)) add(InvalidErrorHappened(Invalid.WEIGHT));
+    });
+
+    height.listen((height) {
+      if (!isHeightValid(height)) add(InvalidErrorHappened(Invalid.HEIGHT));
+    });
+
+    age.listen((age) {
+      if (!isAgeValid(age)) add(InvalidErrorHappened(Invalid.AGE));
+    });
   }
 
-  BehaviorSubject<bool> _isMaleSelectedSubject = new BehaviorSubject<bool>();
-  BehaviorSubject<double> _heightSubject = new BehaviorSubject<double>();
-  BehaviorSubject<double> _weightSubject = new BehaviorSubject<double>();
-  BehaviorSubject<int> _ageSubject = new BehaviorSubject<int>();
-  BehaviorSubject<Invalid> _errorSubject = new BehaviorSubject<Invalid>();
+  StreamController<bool> _isMaleSelectedSubject =
+      new StreamController<bool>.broadcast();
+  StreamController<double> _heightSubject =
+      new StreamController<double>.broadcast();
+  StreamController<double> _weightSubject =
+      new StreamController<double>.broadcast();
+  StreamController<int> _ageSubject = new StreamController<int>.broadcast();
+  StreamController<bool> _calculateButtonEnabledSubject =
+      new StreamController<bool>.broadcast();
 
   Stream<bool> get isMaleSelected => _isMaleSelectedSubject.stream;
 
@@ -36,11 +75,11 @@ class CalculatorBloc extends BaseBloc with BMIValidator {
 
   Stream<int> get age => _ageSubject.stream;
 
-  Stream<Invalid> get errorType => _errorSubject.stream;
+  Stream<bool> get isCalculateButtonEnabled =>
+      _calculateButtonEnabledSubject.stream;
 
   double _height = 0.0;
   double _weight = 0.0;
-  int _age = 0;
 
   void onGenderSelected(Gender type) {
     if (type == Gender.FEMALE) {
@@ -58,10 +97,6 @@ class CalculatorBloc extends BaseBloc with BMIValidator {
   void onWeightChanged(String value) {
     double parsed = double.tryParse(value);
 
-    if (parsed == null) {
-      return;
-    }
-
     _weight = parsed;
     _weightSubject.add(parsed);
   }
@@ -69,44 +104,44 @@ class CalculatorBloc extends BaseBloc with BMIValidator {
   void onAgeChanged(String value) {
     int parsed = int.tryParse(value);
 
-    if (parsed == null) {
-      return;
-    }
-
-    _age = parsed;
     _ageSubject.add(parsed);
   }
 
-  void onCalculatePressed() {
-    if (!isWeightValid(_weight)) {
-      _errorSubject.add(Invalid.WEIGHT);
-      return;
-    }
+  @override
+  CalculatorState get initialState => Initial();
 
-    if (!isAgeValid(_age)) {
-      _errorSubject.add(Invalid.AGE);
-      return;
-    }
+  @override
+  Stream<CalculatorState> mapEventToState(CalculatorEvent event) async* {
+    if (event is CalculateButtonPressed) {
+      double result = _weight / ((_height / 100) * (_height / 100));
+      String finalResult = result.toStringAsFixed(2);
 
-    if (!isHeightValid(_height)) {
-      _errorSubject.add(Invalid.HEIGHT);
-      return;
-    }
+      BMIResult bmiResult;
+      if (result < 18.5) {
+        bmiResult = BMIResult(result: finalResult, bmi: BMI.UNDERWEIGHT);
+      } else if (result >= 18.5 && result <= 24.9) {
+        bmiResult = BMIResult(result: finalResult, bmi: BMI.NORMAL);
+      } else if (result >= 25.0 && result <= 29.9) {
+        bmiResult = BMIResult(result: finalResult, bmi: BMI.OVERWEIGHT);
+      } else {
+        bmiResult = BMIResult(result: finalResult, bmi: BMI.OBESE);
+      }
 
-    print('Height: $_height');
-    print('Weight: $_weight');
-    double result = _weight / ((_height / 100) * (_height / 100));
-    print("BMI: ${result.round()}");
+      yield BMISuccess(bmiResult);
+    } else if (event is InvalidErrorHappened) {
+      yield InvalidError(event.invalid);
+    }
   }
 
   @override
-  void dispose() {
+  Future<void> close() {
     Future.wait([
       _isMaleSelectedSubject?.close(),
       _heightSubject?.close(),
       _weightSubject?.close(),
       _ageSubject?.close(),
-      _errorSubject?.close(),
+      _calculateButtonEnabledSubject?.close(),
     ]);
+    return super.close();
   }
 }

@@ -13,6 +13,16 @@
   "gr": "gr",
   "settings": "Settings",
   "calculate": "CALCULATE",
-  "age": "Age",
-  "years_old": "Years old"
+  "age": "AGE",
+  "years_old": "years old",
+  "invalid_weight": "Weight is invalid! it should be greater than zero!",
+  "invalid_height": "Height shouldn't be zero!",
+  "invalid_age": "Age should be greater than 19",
+  "result": "Result",
+  "underweight": "Underweight",
+  "normal": "Normal",
+  "overweight": "Overweight",
+  "obese": "Obese",
+  "your_bmi_value": "Your BMI value",
+  "cancel": "Cancel"
 }

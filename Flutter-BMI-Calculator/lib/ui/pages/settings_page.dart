@@ -36,8 +36,11 @@ class _SettingsPageState extends State<SettingsPage> {
               return SwitchListTile(
                 activeColor: Colors.pinkAccent,
                 value: langSnapshot.hasData ? langSnapshot.data : false,
-                title: Text(AppLocalizations.of(context)
-                    .translate(LocalizationKeys.languageSelection)),
+                title: Text(
+                  AppLocalizations.of(context)
+                      .translate(LocalizationKeys.languageSelection),
+                  style: Theme.of(context).textTheme.subtitle,
+                ),
                 onChanged: (value) {
                   _languageBloc.changeLanguage(value);
                 },
@@ -53,8 +56,10 @@ class _SettingsPageState extends State<SettingsPage> {
               return SwitchListTile(
                 activeColor: Colors.pinkAccent,
                 value: themeSnapshot.hasData ? themeSnapshot.data : false,
-                title: Text(AppLocalizations.of(context)
-                    .translate(LocalizationKeys.darkMode)),
+                title: Text(
+                    AppLocalizations.of(context)
+                        .translate(LocalizationKeys.darkMode),
+                    style: Theme.of(context).textTheme.subtitle),
                 onChanged: (value) {
                   _themeBloc.changeTheme(value);
                 },
@@ -66,7 +71,8 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
           ListTile(
             title: Text(
-                AppLocalizations.of(context).translate(LocalizationKeys.about)),
+                AppLocalizations.of(context).translate(LocalizationKeys.about),
+                style: Theme.of(context).textTheme.subtitle),
             onTap: () {},
           ),
           Divider(
