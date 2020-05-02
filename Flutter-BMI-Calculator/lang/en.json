@@ -24,5 +24,7 @@
   "overweight": "Overweight",
   "obese": "Obese",
   "your_bmi_value": "Your BMI value",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "about_app": "App is developed with love by Azerbaijan Flutter Users Community.",
+  "developer_info": "Developer: Kanan Yusubov."
 }

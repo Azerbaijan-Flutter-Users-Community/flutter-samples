@@ -28,4 +28,6 @@ class LocalizationKeys {
   static const String obese = "obese";
   static const String your_bmi_value = "your_bmi_value";
   static const String cancel = "cancel";
+  static const String about_app = "about_app";
+  static const String developer_info = "developer_info";
 }

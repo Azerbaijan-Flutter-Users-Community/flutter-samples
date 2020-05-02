@@ -24,5 +24,7 @@
   "overweight": "Çəkiniz artıqdır!",
   "obese": "Şişmansınız!",
   "your_bmi_value": "Sizin BMI dəyəriniz",
-  "cancel": "Ləğv et"
+  "cancel": "Ləğv et",
+  "about_app": "Tətbiq Azerbaijan Flutter Users Community tərəfindən sevgi ilə hazırlanıb.",
+  "developer_info": "Proqramçı: Kənan Yusubov."
 }

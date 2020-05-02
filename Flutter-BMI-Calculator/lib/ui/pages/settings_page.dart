@@ -73,7 +73,24 @@ class _SettingsPageState extends State<SettingsPage> {
             title: Text(
                 AppLocalizations.of(context).translate(LocalizationKeys.about),
                 style: Theme.of(context).textTheme.subtitle),
-            onTap: () {},
+            onTap: () {
+              showAboutDialog(
+                  context: context,
+                  applicationName: 'BMI Calculator',
+                  applicationVersion: 'v2.0.0',
+                  applicationIcon: Image.asset('assets/bmi.png'),
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)
+                          .translate(LocalizationKeys.about_app),
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      AppLocalizations.of(context)
+                          .translate(LocalizationKeys.developer_info),
+                    ),
+                  ]);
+            },
           ),
           Divider(
             height: 0,
