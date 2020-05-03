@@ -28,7 +28,7 @@ mixin BMIValidator {
       !value.toString().contains('..') &&
       (value > 1 && value <= 300);
 
-  bool isAgeValid(int value) => value != null && value > 20;
+  bool isAgeValid(int value) => value != null && value >= 20;
 }
 
 class CalculatorBloc extends Bloc<CalculatorEvent, CalculatorState>
@@ -120,14 +120,18 @@ class CalculatorBloc extends Bloc<CalculatorEvent, CalculatorState>
   Stream<CalculatorState> mapEventToState(CalculatorEvent event) async* {
     if (event is CalculateButtonPressed) {
       double result = _weight / ((_height / 100) * (_height / 100));
-      String finalResult = result.toStringAsFixed(2);
+      String finalResult = result.toStringAsFixed(1);
+
+      print('result: $result');
+      final finalDoubleResult = double.tryParse(finalResult);
+      print('finalDoubleResult: $finalDoubleResult');
 
       BMIResult bmiResult;
       if (result < 18.5) {
         bmiResult = BMIResult(result: finalResult, bmi: BMI.UNDERWEIGHT);
       } else if (result >= 18.5 && result <= 24.9) {
         bmiResult = BMIResult(result: finalResult, bmi: BMI.NORMAL);
-      } else if (result >= 25.0 && result <= 29.9) {
+      } else if (result > 24.9 && result <= 29.99) {
         bmiResult = BMIResult(result: finalResult, bmi: BMI.OVERWEIGHT);
       } else {
         bmiResult = BMIResult(result: finalResult, bmi: BMI.OBESE);
