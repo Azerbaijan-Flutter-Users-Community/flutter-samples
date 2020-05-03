@@ -1,5 +1,5 @@
 {
-  "bmi_calculator": "BMI Hesablayıcı",
+  "bmi_calculator": "BKİ Hesablayıcı",
   "welcome": "Xoş Gəlmisiniz!",
   "language_selection": "Dil seçimi",
   "dark_mode": "Tünd tema",
@@ -15,16 +15,19 @@
   "calculate": "HESABLA",
   "age": "YAŞINIZ",
   "years_old": "yaş",
-  "invalid_weight": "Kütlə uyğun deyil! qiyməti 0-dan böyük olmalıdır!",
+  "invalid_weight": "Çəki uyğun deyil! qiyməti 0-dan böyük və 300-dən olmalıdır!",
   "invalid_height": "Boy 0 ola bilməz!",
-  "invalid_age": "yaş 19-dan böyük olmalıdır!",
+  "invalid_age": "yaş 19-dan böyük və 120-dən kiçik olmalıdır!",
   "result": "Nəticə",
   "underweight": "Çəkiniz aşağıdır!",
-  "normal": "Çəkiniz normaldır",
-  "overweight": "Çəkiniz artıqdır!",
+  "normal": "Normal",
+  "overweight": "Artıq çəkili!",
   "obese": "Şişmansınız!",
-  "your_bmi_value": "Sizin BMI dəyəriniz",
+  "your_bmi_value": "Sizin BKI dəyəriniz",
   "cancel": "Ləğv et",
   "about_app": "Tətbiq Azerbaijan Flutter Users Community tərəfindən sevgi ilə hazırlanıb.",
-  "developer_info": "Proqramçı: Kənan Yusubov."
+  "developer_info": "Proqramçı: Kənan Yusubov.",
+  "overweight_or_obese_message": "Kilolu olan hər kəs əlavə kilo almamağa çalışmalıdır. Bundan əlavə, digər risk faktorları (məsələn, yüksək LDL xolesterol, aşağı HDL xolesterol və ya yüksək təzyiq) ilə kilolu olsanız, arıqlamağa çalışmalısınız. Hətta kiçik bir kilo itkisi (mövcud çəkinizin yalnız 10% -i) xəstəlik riskini azaltmağa kömək edə bilər. Arıqlamaq üçün uyğun yolları müəyyən etmək üçün həkiminizlə danışın.",
+  "underweight_message": "Arıqlamağın mümkün səbəblərini bilmək və kilo almaq lazım olduqda, həkiminizlə danışın.",
+  "normal_message": "Çəkiniz normaldır."
 }

@@ -30,4 +30,8 @@ class LocalizationKeys {
   static const String cancel = "cancel";
   static const String about_app = "about_app";
   static const String developer_info = "developer_info";
+  static const String overweight_or_obese_message =
+      "overweight_or_obese_message";
+  static const String underweight_message = "underweight_message";
+  static const String normal_message = "normal_message";
 }

@@ -15,9 +15,9 @@
   "calculate": "CALCULATE",
   "age": "AGE",
   "years_old": "years old",
-  "invalid_weight": "Weight is invalid! it should be greater than zero!",
+  "invalid_weight": "Weight is invalid! it should be greater than zero and lesser than 300!",
   "invalid_height": "Height shouldn't be zero!",
-  "invalid_age": "Age should be greater than 19",
+  "invalid_age": "Age should be greater than 19 and lesser than 120!",
   "result": "Result",
   "underweight": "Underweight",
   "normal": "Normal",
@@ -26,5 +26,8 @@
   "your_bmi_value": "Your BMI value",
   "cancel": "Cancel",
   "about_app": "App is developed with love by Azerbaijan Flutter Users Community.",
-  "developer_info": "Developer: Kanan Yusubov."
+  "developer_info": "Developer: Kanan Yusubov.",
+  "overweight_or_obese_message": "Anyone who is overweight should try to avoid gaining additional weight. Additionally, if you are overweight with other risk factors (such as high LDL cholesterol, low HDL cholesterol, or high blood pressure), you should try to lose weight. Even a small weight loss (just 10% of your current weight) may help lower the risk of disease. Talk with your healthcare provider to determine appropriate ways to lose weight.",
+  "underweight_message": "Talk with your healthcare provider to determine possible causes of underweight and if you need to gain weight.",
+  "normal_message": "Your weight is normal."
 }

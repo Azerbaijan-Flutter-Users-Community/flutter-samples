@@ -78,16 +78,28 @@ class _CalculationPageState extends State<CalculationPage> {
 
           if (resultType == BMI.UNDERWEIGHT) {
             resultMessage = AppLocalizations.of(context)
-                .translate(LocalizationKeys.underweight);
+                    .translate(LocalizationKeys.underweight) +
+                "\n\n" +
+                AppLocalizations.of(context)
+                    .translate(LocalizationKeys.underweight_message);
           } else if (resultType == BMI.NORMAL) {
-            resultMessage =
-                AppLocalizations.of(context).translate(LocalizationKeys.normal);
+            resultMessage = AppLocalizations.of(context)
+                    .translate(LocalizationKeys.normal) +
+                "\n\n" +
+                AppLocalizations.of(context)
+                    .translate(LocalizationKeys.normal_message);
           } else if (resultType == BMI.OVERWEIGHT) {
             resultMessage = AppLocalizations.of(context)
-                .translate(LocalizationKeys.overweight);
+                    .translate(LocalizationKeys.overweight) +
+                "\n\n" +
+                AppLocalizations.of(context)
+                    .translate(LocalizationKeys.overweight_or_obese_message);
           } else if (resultType == BMI.OBESE) {
-            resultMessage =
-                AppLocalizations.of(context).translate(LocalizationKeys.obese);
+            resultMessage = AppLocalizations.of(context)
+                    .translate(LocalizationKeys.obese) +
+                "\n\n" +
+                AppLocalizations.of(context)
+                    .translate(LocalizationKeys.overweight_or_obese_message);
           }
 
           showDialog(
@@ -99,6 +111,7 @@ class _CalculationPageState extends State<CalculationPage> {
                           .translate(LocalizationKeys.result),
                     ),
                     content: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         Text(

@@ -28,35 +28,23 @@ mixin BMIValidator {
       !value.toString().contains('..') &&
       (value > 1 && value <= 300);
 
-  bool isAgeValid(int value) => value != null && value >= 20;
+  bool isAgeValid(int value) => value != null && value >= 20 && value <= 120;
 }
 
 class CalculatorBloc extends Bloc<CalculatorEvent, CalculatorState>
     with BMIValidator {
   CalculatorBloc() {
     weight.listen((weight) {
-      print('weight: working');
-      print('weight: $_weight');
-      print('height: $_height');
-      print('age: $_age');
       _calculateButtonEnabledSubject.add(isAllValid());
       if (!isWeightValid(weight)) add(InvalidErrorHappened(Invalid.WEIGHT));
     });
 
     height.listen((height) {
-      print('height: working');
-      print('weight: $_weight');
-      print('height: $_height');
-      print('age: $_age');
       _calculateButtonEnabledSubject.add(isAllValid());
       if (!isHeightValid(height)) add(InvalidErrorHappened(Invalid.HEIGHT));
     });
 
     age.listen((age) {
-      print('age: working');
-      print('weight: $_weight');
-      print('height: $_height');
-      print('age: $_age');
       _calculateButtonEnabledSubject.add(isAllValid());
       if (!isAgeValid(age)) add(InvalidErrorHappened(Invalid.AGE));
     });
@@ -122,16 +110,14 @@ class CalculatorBloc extends Bloc<CalculatorEvent, CalculatorState>
       double result = _weight / ((_height / 100) * (_height / 100));
       String finalResult = result.toStringAsFixed(1);
 
-      print('result: $result');
       final finalDoubleResult = double.tryParse(finalResult);
-      print('finalDoubleResult: $finalDoubleResult');
 
       BMIResult bmiResult;
-      if (result < 18.5) {
+      if (finalDoubleResult < 18.5) {
         bmiResult = BMIResult(result: finalResult, bmi: BMI.UNDERWEIGHT);
-      } else if (result >= 18.5 && result <= 24.9) {
+      } else if (finalDoubleResult >= 18.5 && finalDoubleResult <= 24.9) {
         bmiResult = BMIResult(result: finalResult, bmi: BMI.NORMAL);
-      } else if (result > 24.9 && result <= 29.99) {
+      } else if (finalDoubleResult > 24.9 && finalDoubleResult <= 29.99) {
         bmiResult = BMIResult(result: finalResult, bmi: BMI.OVERWEIGHT);
       } else {
         bmiResult = BMIResult(result: finalResult, bmi: BMI.OBESE);
