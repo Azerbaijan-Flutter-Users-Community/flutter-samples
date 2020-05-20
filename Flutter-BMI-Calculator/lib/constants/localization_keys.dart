@@ -34,4 +34,6 @@ class LocalizationKeys {
       "overweight_or_obese_message";
   static const String underweight_message = "underweight_message";
   static const String normal_message = "normal_message";
+  static const String azerbaijani = "azerbaijani";
+  static const String english = "english";
 }

@@ -29,5 +29,7 @@
   "developer_info": "Proqramçı: Kənan Yusubov.",
   "overweight_or_obese_message": "Kilolu olan hər kəs əlavə kilo almamağa çalışmalıdır. Bundan əlavə, digər risk faktorları (məsələn, yüksək LDL xolesterol, aşağı HDL xolesterol və ya yüksək təzyiq) ilə kilolu olsanız, arıqlamağa çalışmalısınız. Hətta kiçik bir kilo itkisi (mövcud çəkinizin yalnız 10% -i) xəstəlik riskini azaltmağa kömək edə bilər. Arıqlamaq üçün uyğun yolları müəyyən etmək üçün həkiminizlə danışın.",
   "underweight_message": "Arıqlamağın mümkün səbəblərini bilmək və kilo almaq lazım olduqda, həkiminizlə danışın.",
-  "normal_message": "Çəkiniz normaldır."
+  "normal_message": "Çəkiniz normaldır.",
+  "azerbaijani": "Azərbaycan dili",
+  "english": "İngilis dili"
 }

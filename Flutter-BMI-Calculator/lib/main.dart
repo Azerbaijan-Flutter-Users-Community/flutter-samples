@@ -15,8 +15,6 @@ import 'package:google_fonts/google_fonts.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
-
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -97,8 +95,6 @@ class _MyAppState extends State<MyApp> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  unselectedWidgetColor:
-                      AppColors.unselectedDarkGenderBackground,
                   focusColor: AppColors.selectedGenderBackground,
                   hintColor: Colors.white,
                   dividerColor: Colors.grey,
@@ -151,7 +147,6 @@ class _MyAppState extends State<MyApp> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  unselectedWidgetColor: AppColors.unselectedGenderBackground,
                   focusColor: AppColors.selectedGenderBackground,
                   hintColor: AppColors.primaryAndDarkColor,
                   sliderTheme: SliderThemeData(
