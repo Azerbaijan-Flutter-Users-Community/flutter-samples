@@ -31,6 +31,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final ScrollController scrollController = ScrollController();
+  int itemCount = 0;
 
   @override
   void initState() {
@@ -78,7 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     );
                   }
                 },
-                itemCount: calculateItemCount(state),
+                itemCount: itemCount = calculateItemCount(state),
               ),
             );
           }
@@ -99,7 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
       BuildContext context, ScrollNotification scrollNotification) {
     if (scrollNotification is ScrollEndNotification &&
         scrollController.position.extentAfter == 0) {
-      context.bloc<MockPaginationBloc>().add(NextPageFetchRequested());
+      context.bloc<MockPaginationBloc>().add(NextPageFetchRequested(itemCount));
     }
 
     return false;

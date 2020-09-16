@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 
 import '../mock_repository.dart';
 
@@ -13,8 +14,17 @@ class MockPaginationBloc
   final mockRepository = MockRepository();
 
   @override
+  void onEvent(MockPaginationEvent event) {
+    super.onEvent(event);
+    final fetchEvent = event as NextPageFetchRequested;
+    debugPrint('${fetchEvent.runtimeType} => ${fetchEvent.currentLength}');
+  }
+
+  @override
   Stream<MockPaginationState> mapEventToState(
       MockPaginationEvent event) async* {
+    if (state.reachedEndOfTheResults) return;
+
     if (event is NextPageFetchRequested) {
       print('next page loading...');
       try {
