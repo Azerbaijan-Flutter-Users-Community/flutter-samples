@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 
 import '../mock_repository.dart';
 
@@ -14,19 +13,11 @@ class MockPaginationBloc
   final mockRepository = MockRepository();
 
   @override
-  void onEvent(MockPaginationEvent event) {
-    super.onEvent(event);
-    final fetchEvent = event as NextPageFetchRequested;
-    debugPrint('${fetchEvent.runtimeType} => ${fetchEvent.currentLength}');
-  }
-
-  @override
   Stream<MockPaginationState> mapEventToState(
       MockPaginationEvent event) async* {
     if (state.reachedEndOfTheResults) return;
 
     if (event is NextPageFetchRequested) {
-      print('next page loading...');
       try {
         final nextPageItems =
             await mockRepository.nextPage(offset: state.items.length, limit: 5);
@@ -35,6 +26,20 @@ class MockPaginationBloc
           yield state.update(reachedToEnd: true);
         } else {
           yield MockPaginationState.success(state.items + nextPageItems);
+        }
+      } on Exception {
+        print('error!');
+      }
+    } else if (event is ListRefreshRequested) {
+      print('working');
+      try {
+        final newFirstPageItems =
+            await mockRepository.nextPage(offset: 0, limit: 5);
+        print('count: ${newFirstPageItems.length}');
+        if (newFirstPageItems.isEmpty) {
+          yield state.update(reachedToEnd: true);
+        } else {
+          yield MockPaginationState.success(newFirstPageItems);
         }
       } on Exception {
         print('error!');

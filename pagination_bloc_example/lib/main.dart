@@ -50,40 +50,44 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text('Mock Pagination with BLoC'),
       ),
-      body: BlocBuilder<MockPaginationBloc, MockPaginationState>(
-        builder: (context, state) {
-          if (state.items == null) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          } else {
-            return NotificationListener<ScrollNotification>(
-              onNotification: (notification) =>
-                  _handleNotification(context, notification),
-              child: ListView.builder(
-                controller: scrollController,
-                itemBuilder: (context, i) {
-                  if (i >= state.items.length) {
-                    return SizedBox(
-                      height: 100,
-                      child: CupertinoActivityIndicator(),
-                    );
-                  } else {
-                    return SizedBox(
-                      height: 200,
-                      child: Card(
-                        child: Center(
-                          child: Text('$i item: ${state.items[i]}'),
+      body: RefreshIndicator(
+        onRefresh: () async =>
+            context.bloc<MockPaginationBloc>().add(ListRefreshRequested()),
+        child: BlocBuilder<MockPaginationBloc, MockPaginationState>(
+          builder: (context, state) {
+            if (state.items == null) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            } else {
+              return NotificationListener<ScrollNotification>(
+                onNotification: (notification) =>
+                    _handleNotification(context, notification),
+                child: ListView.builder(
+                  controller: scrollController,
+                  itemBuilder: (context, i) {
+                    if (i >= state.items.length) {
+                      return SizedBox(
+                        height: 100,
+                        child: CupertinoActivityIndicator(),
+                      );
+                    } else {
+                      return SizedBox(
+                        height: 200,
+                        child: Card(
+                          child: Center(
+                            child: Text('$i item: ${state.items[i]}'),
+                          ),
                         ),
-                      ),
-                    );
-                  }
-                },
-                itemCount: itemCount = calculateItemCount(state),
-              ),
-            );
-          }
-        },
+                      );
+                    }
+                  },
+                  itemCount: itemCount = calculateItemCount(state),
+                ),
+              );
+            }
+          },
+        ),
       ),
     );
   }

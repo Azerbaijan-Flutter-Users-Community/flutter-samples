@@ -1,13 +1,10 @@
 part of 'mock_pagination_bloc.dart';
 
-abstract class MockPaginationEvent extends Equatable {
+abstract class MockPaginationEvent {
   const MockPaginationEvent();
-
-  @override
-  List<Object> get props => [];
 }
 
-class NextPageFetchRequested extends MockPaginationEvent {
+class NextPageFetchRequested extends MockPaginationEvent with EquatableMixin {
   NextPageFetchRequested([this.currentLength = 0]);
 
   final int currentLength;
@@ -15,3 +12,5 @@ class NextPageFetchRequested extends MockPaginationEvent {
   @override
   List<Object> get props => [currentLength];
 }
+
+class ListRefreshRequested extends MockPaginationEvent {}
